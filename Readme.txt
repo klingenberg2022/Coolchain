@@ -51,6 +51,7 @@ datenverarbeitung_aufgabe_zwei(datasql)
 
 # Datenverarbeitung für Aufgabe drei durchführen
 datenverarbeitung_aufgabe_drei(datasql)
+
 # Datenverarbeitung für die Ausgabe der Korrekten Ergebnisse durchführen
 datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebnis_aufgabe_zwei, ergebnis_aufgabe_drei)
 ```
