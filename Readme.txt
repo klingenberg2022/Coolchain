@@ -18,6 +18,8 @@ Der Code adressiert spezifische Aufgaben im Zusammenhang mit der Datenverarbeitu
 4. **Datenverarbeitung für Aufgabe drei**
     - Die Funktion `datenverarbeitung_aufgabe_drei(datasql)` ermittelt Transporte, deren Dauer mehr als 48 Stunden beträgt, und gibt die entsprechenden Transport-IDs aus.
 
+5. **Datenverarbeitung für Korrekte Ergebnisse**
+    - Die Funktion datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebnis_aufgabe_zwei, ergebnis_aufgabe_drei) ermittelt die IDs die den Transportbediengungen entsprechen.
 ### Anforderungen
 
 Um den Code auszuführen, müssen die folgenden Pakete installiert sein:
@@ -49,14 +51,16 @@ datenverarbeitung_aufgabe_zwei(datasql)
 
 # Datenverarbeitung für Aufgabe drei durchführen
 datenverarbeitung_aufgabe_drei(datasql)
+# Datenverarbeitung für die Ausgabe der Korrekten Ergebnisse durchführen
+datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebnis_aufgabe_zwei, ergebnis_aufgabe_drei)
 ```
 
 ### Autor
 
-Dieser Code wurde von Tim K entwickelt.
+Dieser Code wurde von Tim K.+N entwickelt.
 
 ### Lizenz
 
-Dieser Code ist unter der Tim K  lizenziert.
+Dieser Code ist unter der Tim K+N  lizenziert.
 
-Für weitere Informationen und Support kontaktieren Sie bitte den Support.
+Für weitere Informationen und Support kontaktieren Sie bitte den Support :(#).
