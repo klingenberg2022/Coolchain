@@ -1,5 +1,5 @@
 #-----------------------------------
-#Version 1.4
+#Version 1.5
 #Aufgabe Kühlkette 
 #Stand 02.03.2024
 #-----------------------------------
@@ -194,10 +194,9 @@ def datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebni
         if idliste[j] not in ergebnis_aufgabe_eins and idliste[j] not in ergebnis_aufgabe_zwei and idliste[j] not in ergebnis_aufgabe_drei:
             korrekte_ids.append(idliste[j])
     
-    for g in range(len(korrekte_ids)):
+    for g in range(len(korrekte_ids)):              #Ausgabe aller richtigen Ergebnisse
         print(f"Korrekte ID {korrekte_ids[g]}")
-            
-
+         
     return korrekte_ids, ergebnis_aufgabe_eins, ergebnis_aufgabe_zwei, ergebnis_aufgabe_drei
 
 sql_datenbank_verbindung()
