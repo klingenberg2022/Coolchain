@@ -5,7 +5,12 @@
 #-----------------------------------
 """
 Gruppe: 
-X+1
+Burak
+Tim
+Marcel
+Malte
+Jan
+Fathi
 """
 import pyodbc
 from datetime import timedelta
@@ -186,9 +191,12 @@ def datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebni
             idliste.append(datasql[i][1])
 
     for j in range(len(idliste) - 1):
-        if idliste[j] not in ergebnis_aufgabe_eins or idliste[j] not in ergebnis_aufgabe_zwei or idliste[j] not in ergebnis_aufgabe_drei:
+        if idliste[j] not in ergebnis_aufgabe_eins and idliste[j] not in ergebnis_aufgabe_zwei and idliste[j] not in ergebnis_aufgabe_drei:
             korrekte_ids.append(idliste[j])
-            print(f"Korrekte ID {idliste[j]}")
+    
+    for g in range(len(korrekte_ids)):
+        print(f"Korrekte ID {korrekte_ids[g]}")
+            
 
     return korrekte_ids, ergebnis_aufgabe_eins, ergebnis_aufgabe_zwei, ergebnis_aufgabe_drei
 
