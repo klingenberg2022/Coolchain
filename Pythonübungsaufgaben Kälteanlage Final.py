@@ -1,7 +1,7 @@
 #-----------------------------------
-#Version 1.5
+#Version 1.6
 #Aufgabe Kühlkette 
-#Stand 02.03.2024
+#Stand 05.04.2024
 #-----------------------------------
 """
 Gruppe: 
@@ -15,6 +15,12 @@ Fathi
 import pyodbc
 from datetime import timedelta
 
+from Crypto.Cipher import AES 
+from Crypto.Util.Padding import unpad 
+
+# Initialisierung 
+key = b'mysecretpassword'                
+iv  = b'passwort-salzen!'   
 
 datasql= []
 
