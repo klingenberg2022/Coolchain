@@ -1,36 +1,24 @@
-#Pythonübungsaufgaben Kälteanlage Phase 2
-#-----------------------------------
-#Version 2.0
-#Aufgabe Kühlkette 
-#Stand 05.04.2024
-#-----------------------------------
-"""
-Gruppe: 
-Burak
-Tim
-Marcel
-Malte
-Jan
-Fathi
-"""
 import pyodbc
-from datetime import timedelta
-
-from Crypto.Cipher import AES 
+from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
-# Initialisierung
-key = b'mysecretpassword' # 16 Byte Passwort
-iv = b'passwort-salzen!' # 16 Byte Initialization Vektor
-cipher = AES.new(key, AES.MODE_CBC, iv) # Verschlüsselung initialisieren
-# Entschlüsselungsfunktion
+
+# Initialization
+key = b'mysecretpassword'  # 16 Byte Passwort
+iv = b'passwort-salzen!'  # 16 Byte Initialization Vektor
+cipher = AES.new(key, AES.MODE_CBC, iv)  # Initialize encryption
+
+# Decryption function
 def decrypt_value(encrypted_data):
-    return unpad(cipher.decrypt(encrypted_data), AES.block_size).decode()
-# Verbindungsdaten
+    return unpad(cipher.decrypt(encrypted_data),16).decode('UTF-32')
+
+# Connection details
 server = 'sc-db-server.database.windows.net'
 database = 'supplychain'
 username = 'rse'
 password = 'Pa$$w0rd'
-# Verbindungsstring
+datasql=[]
+#0x46b0+col,0x01,0x9960+col,0x0a
+# Connection string
 conn_str = (
     f'DRIVER={{ODBC Driver 17 for SQL Server}};'
     f'SERVER={server};'
@@ -38,21 +26,29 @@ conn_str = (
     f'UID={username};'
     f'PWD={password}'
 )
-# Verbindung herstellen
+
+# Connect to the database
 conn = pyodbc.connect(conn_str)
 cursor = conn.cursor()
-# Datensätze auslesen
-select_query = 'SELECT companyID, company, strasse, ort, plz FROM company_crypt'
+
+# Read records
+select_query = 'SELECT company, transportstation,transportID, category,direction, datetime FROM v_coolchain_crypt'
 cursor.execute(select_query)
-# Für jeden Datensatz die Entschlüsselung durchführen und ausgeben
+print(select_query)
+# For each row, decrypt and print the company
 for row in cursor.fetchall():
-    companyID, encrypted_company, encrypted_strasse, encrypted_ort, encrypted_plz = row
-    # Da die Daten als binär gespeichert wurden, sollte hier keine Umwandlung mit str() erfolgen
-    decrypted_company = decrypt_value(encrypted_company)
-    decrypted_strasse = decrypt_value(encrypted_strasse)
-    decrypted_ort = decrypt_value(encrypted_ort)
-    decrypted_plz = decrypt_value(encrypted_plz)
-    print(f"ID: {companyID}, Company: {decrypted_company}, Strasse: {decrypted_strasse}, Ort: {decrypted_ort},PLZ: {decrypted_plz}")
-# Verbindung schließen
+    encrypted_company, encrypted_transportstation, transportID, encrypted_category, direction, datetime = row
+    print(encrypted_company)
+    print(encrypted_transportstation)
+    decrypted_company = decrypt_value(encrypted_company) # Assuming the encrypted data is in the first column directly
+    print(decrypted_company)
+    decrypted_transportstation = decrypt_value(encrypted_transportstation) 
+    decrypted_category = decrypt_value(encrypted_category)
+    data =[decrypted_company, decrypted_transportstation,transportID, decrypted_category, datetime ]
+    datasql.append(data)
+
+print(f"{decrypted_company }")
+
+# Close connection
 cursor.close()
 conn.close()
