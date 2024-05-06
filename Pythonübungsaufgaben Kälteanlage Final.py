@@ -1,5 +1,5 @@
 #-----------------------------------
-#Version 1.6
+#Version 1.7
 #Aufgabe Kühlkette 
 #Stand 05.04.2024
 #-----------------------------------
@@ -45,7 +45,7 @@ def sql_datenbank_verbindung():
     cursor = conn.cursor()
 
     # SQL-Statement ausführen mit ORDER BY für transportid und datetime
-    cursor.execute('SELECT * FROM coolchain ORDER BY transportid, datetime')
+    cursor.execute('SELECT * FROM v_coolchain ORDER BY transportid, datetime')
     # Ergebnisse verarbeiten
     for row in cursor:
         datasql.append(row)                 # Rohdaten in eine Liste für Offline-Auswertung übertragen
@@ -69,10 +69,11 @@ def datenverarbeitung_aufgabe_eins(datasql):
     fehlerhafte_transport_id = set()  # Set für fehlerhafte TransportIDs
 
     for i in range(len(datasql)-1):
-            transportid.append(datasql[i][1])
+            transportstation.append(datasql[i][1])
+            transportid.append(datasql[i][2])
             direction.append(datasql[i][4])
             datetime.append(datasql[i][5])
-            transportstation.append(datasql[i][2])
+            
             if datasql[i][1] not in idliste:
                 idliste.append(datasql[i][1])
 
@@ -135,8 +136,8 @@ def datenverarbeitung_aufgabe_zwei(datasql):
 
     # Eine Liste mit allen eindeutigen Produkten erstellen
     for i in range(len(datasql)-1):
-        if datasql[i][1] not in idliste:
-            idliste.append(datasql[i][1])   #i => Zeile ; 1 => Spalte
+        if datasql[i][2] not in idliste:
+            idliste.append(datasql[i][2])   #i => Zeile ; 1 => Spalte
 
     # Jedes Produkt einzeln verarbeiten
     for z in range(len(idliste)-1):
@@ -151,6 +152,7 @@ def datenverarbeitung_aufgabe_zwei(datasql):
                     if liste_abfrage[w+1][5] - liste_abfrage[w][5]> timedelta(minutes=10): #Abfrage ob abstand über 10 Min ist
                         time = liste_abfrage[w+1][5] - liste_abfrage[w][5] 
                         print("Fehler ID",liste_abfrage[w][1],"Kühlkette unterbrochen, Zeitüberschreitung >10 Minuten, Dauer:",time)
+                        print(ergebnis_aufgabe_zwei)
                         ergebnis_aufgabe_zwei.append(liste_abfrage[0][1])  # Ergebnisliste für Produkte, die die Transportdauer überschreiten
         liste_abfrage.clear()
     return ergebnis_aufgabe_zwei
@@ -166,8 +168,8 @@ def datenverarbeitung_aufgabe_drei(datasql):
 
     # Eine Liste mit allen eindeutigen Produkten erstellen
     for i in range(len(datasql)-1):
-        if datasql[i][1] not in idliste:
-            idliste.append(datasql[i][1])   #i => Zeile ; 1 => Spalte
+        if datasql[i][2] not in idliste:
+            idliste.append(datasql[i][2])   #i => Zeile ; 1 => Spalte
 
     # Jedes Produkt einzeln verarbeiten
     for z in range(len(idliste)-1):
@@ -179,7 +181,7 @@ def datenverarbeitung_aufgabe_drei(datasql):
         time = liste_abfrage[y][5] - liste_abfrage[0][5]
         # Überprüfen, ob das Produkt länger als zwei Tage unterwegs ist
         if time > timedelta(days=2):
-            ergebnis_aufgabe_drei.append(liste_abfrage[0][1])  # Ergebnisliste für Produkte, die die Transportdauer überschreiten
+            ergebnis_aufgabe_drei.append(liste_abfrage[0][2])  # Ergebnisliste für Produkte, die die Transportdauer überschreiten
         # Abfrage Liste leeren       
         liste_abfrage.clear()
         time = 0
@@ -193,8 +195,8 @@ def datenverarbeitung_korrekt_ergebnisse(datasql, ergebnis_aufgabe_eins, ergebni
     idliste = []
 
     for i in range(len(datasql) - 1):
-        if datasql[i][1] not in idliste:
-            idliste.append(datasql[i][1])
+        if datasql[i][2] not in idliste:
+            idliste.append(datasql[i][2])
 
     for j in range(len(idliste) - 1):
         if idliste[j] not in ergebnis_aufgabe_eins and idliste[j] not in ergebnis_aufgabe_zwei and idliste[j] not in ergebnis_aufgabe_drei:
