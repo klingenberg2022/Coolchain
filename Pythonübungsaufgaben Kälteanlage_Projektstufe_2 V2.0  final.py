@@ -1,12 +1,21 @@
-#---------------------------------------------
+#----------------------------------------------------------------------------------------------------------
 #IoT-Kühlkettenüberwachung – Projektstufe 2
 #Version 2.0  
+#Datum: 05.05.2024 
 #Autor: Burak Demirci
 #       Jan Von der Heide
 #       Malte Wessels
 #       Tim Klingenberg
 #       Fatih Kara
 #       Marcel Rzondza
+#-----------------------------------------------------------------------------------------------------------
+#
+#
+#Dieses Quellcode überwacht Kühlketten in der Lieferkette mithilfe von IoT-Technologien. 
+#Es stellt eine Verbindung zu einer SQL-Datenbank her, um Temperaturdaten abzurufen, überprüft diese Daten auf Abweichungen und verschlüsselt sensible Informationen für den Transport. 
+#Außerdem werden Wetterdaten an den Auslieferungsorten abgefragt, um potenzielle Probleme bei der Kühlung zu identifizieren.
+#Der Code ist in verschiedene Funktionen unterteilt, die jeweils spezifische Aufgaben erfüllen. 
+#
 #------------------------------------------------------------------------------------------------------------
 
 import pyodbc  # Importiert das pyodbc-Modul für die Datenbankverbindung.
