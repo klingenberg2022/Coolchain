@@ -9,7 +9,7 @@ cipher = AES.new(key, AES.MODE_CBC, iv)  # Initialize encryption
 
 # Decryption function
 def decrypt_value(encrypted_data):
-    return unpad(cipher.decrypt(encrypted_data),16).decode('UTF-32')
+    return unpad(cipher.decrypt(encrypted_data),AES.block_size).decode()
 
 # Connection details
 server = 'sc-db-server.database.windows.net'
