@@ -12,7 +12,8 @@
 #
 #
 #Dieses Quellcode überwacht Kühlketten in der Lieferkette mithilfe von IoT-Technologien. 
-#Es stellt eine Verbindung zu einer SQL-Datenbank her, um Temperaturdaten abzurufen, überprüft diese Daten auf Abweichungen und verschlüsselt sensible Informationen für den Transport. 
+#Es stellt eine Verbindung zu einer SQL-Datenbank her, um Temperaturdaten abzurufen, 
+#überprüft diese Daten auf Abweichungen und verschlüsselt sensible Informationen. 
 #Außerdem werden Wetterdaten an den Auslieferungsorten abgefragt, um potenzielle Probleme bei der Kühlung zu identifizieren.
 #Der Code ist in verschiedene Funktionen unterteilt, die jeweils spezifische Aufgaben erfüllen. 
 #
@@ -35,6 +36,7 @@ cipher = AES.new(key, AES.MODE_CBC, iv)  # Initialize encryption
 
 # API-Schlüssel und Standortinformationen
 api_key = "WRWDCV4PS8X4A27XRMM3F4ESP"  # Stellen Sie sicher, dass dieser Schlüssel korrekt ist
+#-------------------------------------------------------------------------------------------------------------
 
 #Aufgabe 1
 def sql_verbindung_v_tempdata():
@@ -138,15 +140,20 @@ def datenbank_abfragen():
 
     # For each row, decrypt and print the company
     for row in cursor.fetchall():
+        ## Zerlege die Daten aus der aktuellen Zeile in einzelne Variablen
         transportstationID, encrypted_transportstation, encrypted_category, encrypted_plz = row
-        decrypted_transportstation = decrypt_value(encrypted_transportstation)  # Assuming the encrypted data is in the first column directly
+    
+        # Entschlüssele die verschlüsselten Daten für Transportstation, Kategorie und PLZ
+        decrypted_transportstation = decrypt_value(encrypted_transportstation)  
         decrypted_category = decrypt_value(encrypted_category)
         decrypted_plz = decrypt_value(encrypted_plz)
-        data =[transportstationID, decrypted_transportstation, decrypted_category,decrypted_plz ]
-        transportstation_data.append(data)
-    #transportstation_data = [row for row in cursor]
-    # Speichert die Ergebnisse in einer anderen Liste.
 
+        # Erstelle eine Liste mit den entschlüsselten Daten
+        data =[transportstationID, decrypted_transportstation, decrypted_category,decrypted_plz]
+
+        # Füge die Liste mit den entschlüsselten Daten zur Liste transportstation_data hinzu
+        transportstation_data.append(data)
+    
     cursor.close()  # Schließt den Cursor.
     conn.close()  # Schließt die Verbindung zur Datenbank.
 
@@ -225,9 +232,8 @@ def wetterdaten_abrufen(api_key, locations):
 
 # Aufruf der Funktionen
 v_coolchain_data, transportstation_data = datenbank_abfragen()
-# Ruft die Funktion auf und speichert die Rückgabewerte.
-fehlerergebnisse = datenverarbeitung_aufgabe_zwei(v_coolchain_data)  # Führt die Datenverarbeitung durch
+fehlerergebnisse = datenverarbeitung_aufgabe_zwei(v_coolchain_data)                              # Führt die Datenverarbeitung durch
 locations = pruefe_uebereinstimmungen_und_gebe_plz_aus(fehlerergebnisse, transportstation_data)  # Ermittelt Übereinstimmungen
-wetterdaten_abrufen(api_key, locations)  # Ruft Wetterdaten ab
+wetterdaten_abrufen(api_key, locations)                                                          # Ruft Wetterdaten ab
 
 
