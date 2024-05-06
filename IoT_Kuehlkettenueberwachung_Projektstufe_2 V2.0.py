@@ -217,7 +217,5 @@ def wetterdaten_abrufen(api_key, locations):
 fehlerergebnisse = datenverarbeitung_aufgabe_zwei(v_coolchain_data)  # Führt die Datenverarbeitung durch
 locations = pruefe_uebereinstimmungen_und_gebe_plz_aus(fehlerergebnisse, transportstation_data)  # Ermittelt Übereinstimmungen
 wetterdaten_abrufen(api_key, locations)  # Ruft Wetterdaten ab
-print()
-
 
 
